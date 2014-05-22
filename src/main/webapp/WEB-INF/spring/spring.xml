@@ -8,10 +8,10 @@
     <!-- Basic Configurations -->
     <context:annotation-config/>
  
-    <context:component-scan base-package="uaiContacts.model"/>
-    <context:component-scan base-package="uaiContacts.repository"/>
-    <context:component-scan base-package="uaiContacts.service"/>
-    <context:component-scan base-package="uaiContacts.controller"/>
+    <context:component-scan base-package="org.mmss.contacs.dto"/>
+    <context:component-scan base-package="org.mmss.contacts.repository"/>
+    <context:component-scan base-package="org.mmss.contacs.service"/>
+    <context:component-scan base-package="org.mmss.contacs.controller"/>
  
     <!-- SpringMVC -->
     <import resource="spring-mvc.xml"/>
