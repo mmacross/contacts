@@ -1,4 +1,4 @@
-package org.mmss.contacs.commons.dto;
+package org.mmss.contacs.dto;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class ContacDto implements Serializable{
+public class ContactDto implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id

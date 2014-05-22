@@ -1,4 +1,4 @@
-package org.mmss.contacs.commons.dto;
+package org.mmss.contacs.dto;
 
 import java.io.Serializable;
 

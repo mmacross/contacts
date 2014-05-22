@@ -1,4 +1,4 @@
-package org.mmss.contacs.commons.dto;
+package org.mmss.contacs.dto;
 
 public enum Role {
 	ROLE_ADMIN, ROLE_USER
