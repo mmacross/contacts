@@ -3,6 +3,8 @@ package org.mmss.contacs.controller;
 import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mmss.contacs.dto.ContactDto;
 import org.mmss.contacs.service.ContactService;
 import org.mmss.contacs.vo.ContactListVo;
@@ -24,6 +26,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(value = "/protected/contacts")
 public class ContactsController {
+	private final static Log _log = LogFactory.getLog(ContactsController.class);
+	
     private static final String DEFAULT_PAGE_DISPLAYED_TO_USER = "0";
     
     @Autowired
@@ -37,11 +41,16 @@ public class ContactsController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView welcome() {
+    	_log.debug("inicio");
+    	_log.debug("fin");
         return new ModelAndView("contactsList");
     }
     
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<?> listAll(@RequestParam int page, Locale locale) {
+    	_log.debug("inicio");
+    	_log.debug("page:"+page);
+    	_log.debug("fin");
         return createListAllResponse(page, locale);
     }
 
@@ -50,12 +59,16 @@ public class ContactsController {
                                     @RequestParam(required = false) String searchFor,
                                     @RequestParam(required = false, defaultValue = DEFAULT_PAGE_DISPLAYED_TO_USER) int page,
                                     Locale locale) {
+    	_log.debug("inicio");
+    	
         contactService.save(contact);
 
         if (isSearchActivated(searchFor)) {
+        	_log.debug("fin");
             return search(searchFor, page, locale, "message.create.success");
         }
-
+        
+        _log.debug("fin");
         return createListAllResponse(page, locale, "message.create.success");
     }
 
@@ -65,6 +78,7 @@ public class ContactsController {
                                     @RequestParam(required = false) String searchFor,
                                     @RequestParam(required = false, defaultValue = DEFAULT_PAGE_DISPLAYED_TO_USER) int page,
                                     Locale locale) {
+    	_log.debug("inicio");
         if (contactId != contact.getId()) {
             return new ResponseEntity<String>("Bad Request", HttpStatus.BAD_REQUEST);
         }
@@ -72,9 +86,10 @@ public class ContactsController {
         contactService.save(contact);
 
         if (isSearchActivated(searchFor)) {
+        	_log.debug("fin");
             return search(searchFor, page, locale, "message.update.success");
         }
-
+        _log.debug("fin");
         return createListAllResponse(page, locale, "message.update.success");
     }
 
@@ -120,6 +135,8 @@ public class ContactsController {
     }
 
     private ContactListVo listAll(int page) {
+    	_log.debug("inicio");
+    	_log.debug("fin");
         return contactService.findAll(page, maxResults);
     }
 
@@ -128,10 +145,12 @@ public class ContactsController {
     }
 
     private ResponseEntity<?> createListAllResponse(int page, Locale locale) {
+    	_log.debug("page:"+page+", locale:"+locale);
         return createListAllResponse(page, locale, null);
     }
 
     private ResponseEntity<?> createListAllResponse(int page, Locale locale, String messageKey) {
+    	_log.debug("page:"+page+", locale:"+locale+", messageKey:"+messageKey);
         ContactListVo contactListVo = listAll(page);
 
         addActionMessageToVo(contactListVo, locale, messageKey, null);

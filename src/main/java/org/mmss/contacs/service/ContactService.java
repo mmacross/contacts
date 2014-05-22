@@ -1,5 +1,7 @@
 package org.mmss.contacs.service;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mmss.contacs.dto.ContactDto;
 import org.mmss.contacs.vo.ContactListVo;
 import org.mmss.contacts.repository.ContactRepository;
@@ -14,18 +16,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class ContactService {
+	private final static Log _log = LogFactory.getLog(ContactService.class);
 	@Autowired
     private ContactRepository contactRepository;
 	
 	@Transactional(readOnly = true)
     public ContactListVo findAll(int page, int maxResults) {
+		_log.debug("inicio");
+		_log.debug("page:"+page+", maxResults:"+maxResults);
         Page<ContactDto> result = executeQueryFindAll(page, maxResults);
 
         if(shouldExecuteSameQueryInLastPage(page, result)){
             int lastPage = result.getTotalPages() - 1;
             result = executeQueryFindAll(lastPage, maxResults);
         }
-
+        _log.info("result:"+result);
+        _log.debug("fin");
         return buildResult(result);
     }
 	
